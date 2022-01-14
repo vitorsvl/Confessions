@@ -1,0 +1,24 @@
+{
+    "users": [
+        {
+            "name": "vitor",
+            "pass": "2112",
+            "conf": []
+        },
+        {
+            "name": "Arnaldo",
+            "pass": "imacat",
+            "conf": []
+        },
+        {
+            "name": "geddy",
+            "pass": "geddy",
+            "conf": []
+        },
+        {
+            "name": "Alfredo",
+            "pass": "sara",
+            "conf": []
+        }
+    ]
+}
