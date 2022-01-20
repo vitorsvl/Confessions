@@ -1,1 +1,3 @@
 /projc/
+src/__pycache__/
+data/test.json

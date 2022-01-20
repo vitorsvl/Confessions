@@ -1,56 +1,8 @@
 import json
 from typing import Dict, List
-from cryptography.fernet import Fernet
 from src.User import User
 
 DATA = 'data/data.json'
-
-def load_data() -> Dict:
-    """Loads data from encrypted json file, returns a dictionary object"""
-    # read key from file and generate Fernet object
-    with open('filekey.key', 'rb') as filekey:
-        key = filekey.read()
-    fernet = Fernet(key)
-    
-    # opening the encrypted file
-    with open('data/data.json', 'rb') as enc_file:
-        encrypted = enc_file.read()
-    
-    # decrypting the file
-    decrypted = fernet.decrypt(encrypted)
-    return decrypted
-
-
-def save_data(data) -> None:
-    """Encrypt and save data to json file. In each run a new key is generated"""
-    
-    key = Fernet.generate_key()
-    with open('filekey.key', 'wb') as filekey:
-        filekey.write(key)
-
-    fernet = Fernet(key)
-        
-    # encrypting the data  
-    encrypted = fernet.encrypt(data)
-  
-    # Writing data to file 
-    with open('data/data.json', 'wb') as encrypted_file:
-        encrypted_file.write(encrypted)
-
-
-def append_new_user(user: User):
-    """append user info to data"""
-    user_dict = {
-        'name': user.username,
-        'password': user.password,
-        'confessions': user.confessions 
-        }
-
-    data = load_data()
-
-    data['users'].append(user_dict)
-    
-    save_data(data)
 
 #### FUNCTIONS ABOVE ARE UNUSED AT THE MOMENT
 
@@ -82,8 +34,4 @@ def get_usernames() -> List:
 
 
 if __name__ == '__main__':
-    
-    d = load_json()
-
-    print(d)
-    print(type(d))
+    pass

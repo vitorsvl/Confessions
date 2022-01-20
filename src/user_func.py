@@ -19,6 +19,10 @@ USERS_CACHE = []
 # dados que estarão no arquivo data
 
 def user_found(username) -> bool:
+    # check cache first
+    if username in [u.username for u in USERS_CACHE]:
+        return True
+    
     return username in get_usernames()
 
 
@@ -29,8 +33,8 @@ def create_user():
         print(f'{un} is avaliable!')
         user = User(un)
         user.create_password()
-    
-        add_new_user(user) # IDEA salvar informação no arquivo apenas no final da execução,
+        # encrypt here ???
+        # add_new_user(user) # IDEA salvar informação no arquivo apenas no final da execução,
         # assim modificações durante a execução não envolvem manipulação de arquivo
         USERS_CACHE.append(user)
         print('Your user was successfully created! You can login now')
@@ -41,9 +45,11 @@ def create_user():
 def get_user(username) -> User:
     """Returns the User object of the given username"""
     # look in cache
+    print('users cache get user: ', USERS_CACHE)
     if USERS_CACHE:
         for user in USERS_CACHE:
             if user.username == username:
+                print('cache hit')
                 return user
     # look in file
     data = load_json()
@@ -54,19 +60,29 @@ def get_user(username) -> User:
                 user_data = d
                 break   
 
-        user = User(username, passw=user_data.get('pass'), conf=user_data.get('conf'))
+        user = User(username, passw=user_data.get('pass'), conf=user_data.get('conf')) # decrypt here ???
         return user
     else:
         print('error - user not found')
         
 
+def save_cache():
+    """save cached users to file"""
+    if USERS_CACHE:
+        for user in USERS_CACHE:
+            add_new_user(user)
+        print('Users saved!')
+
+
 def login():
+
     print('Welcome to Confessions!')
     while True:
         print("Enter your username or click ENTER to create a new user")
         username = input()
         if not username:
-            create_user() 
+            create_user()
+            print(USERS_CACHE) 
         else:
             if user_found(username):
                 user = get_user(username)

@@ -1,5 +1,5 @@
-from json.tool import main
 from getpass import getpass
+from src.crypto import decrypt_text, encrypt_text
 
 
 class User:
@@ -9,7 +9,7 @@ class User:
             self._password = None
             self._confessions = []
         else:
-            self._password = kwargs['passw']
+            self._password = decrypt_text(kwargs['passw'].encode()) # does it works?
             self._confessions = kwargs['conf']
 
 
@@ -25,7 +25,7 @@ class User:
     def to_dict(self) -> dict:
         d = {
             "name": self._username,
-            "pass": self._password,
+            "pass": encrypt_text(self._password), # does it works?
             "conf": self._confessions
         }
         return d
@@ -49,3 +49,4 @@ class User:
             return True
         else:
             return False
+

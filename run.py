@@ -19,6 +19,13 @@ Funcionalidades iniciais
 # TODO parte das confessions 
 # TODO estrutura de menus
 # IDEA usar dois arquivos de dados, o atual para dados dos usuários e outro para as confissões em sí
-if __name__ == "__main__":
-    uf.login()
-   
+
+
+def main(): # where it should be?
+    try:
+        uf.login()
+    except KeyboardInterrupt:
+        uf.save_cache()
+
+
+main()
