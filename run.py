@@ -1,5 +1,6 @@
 import src.user_func as uf
 import src.data_handle as data_handle
+from view.screens import clear, confirm, first_screen, display_menu
 # from src.User import User 
 '''
 Confessions (nome provisório)
@@ -20,12 +21,41 @@ Funcionalidades iniciais
 # TODO estrutura de menus
 # IDEA usar dois arquivos de dados, o atual para dados dos usuários e outro para as confissões em sí
 
+def menu_confessions():
+    while True:
+        option = display_menu(['New confession', 'My confessions', 'Logout'])
+        
+        if option == 1:
+            # new_confession()
+            pass
+        elif option == 2:
+            # display_confessions()
+            pass
+        elif option == 3:
+            b = confirm('Are you sure?')
+            if b:
+                clear()
+                break
+            else:
+                clear()
+
 
 def main(): # where it should be?
     try:
-        uf.login()
+        while True: # main loop
+
+            first_screen() # title até fim do login
+            menu_confessions() # menu e prompt, termina quando a opção logout é escolhida 
+
+                # IDEA salvar aqui as confessions no arquivo (salvar também ao ctrl+C)
+
+        
+        # TODO handle menu choice (fazer no run mesmo)
+        # TODO partir para a criação da parte das confessions em si
+        
     except KeyboardInterrupt:
         uf.save_cache()
 
 
 main()
+ # ORGANIZAR E FAZER GIT PUSH 

@@ -45,7 +45,6 @@ def create_user():
 def get_user(username) -> User:
     """Returns the User object of the given username"""
     # look in cache
-    print('users cache get user: ', USERS_CACHE)
     if USERS_CACHE:
         for user in USERS_CACHE:
             if user.username == username:
@@ -72,29 +71,3 @@ def save_cache():
         for user in USERS_CACHE:
             add_new_user(user)
         print('Users saved!')
-
-
-def login():
-
-    print('Welcome to Confessions!')
-    while True:
-        print("Enter your username or click ENTER to create a new user")
-        username = input()
-        if not username:
-            create_user()
-            print(USERS_CACHE) 
-        else:
-            if user_found(username):
-                user = get_user(username)
-                print('User found!')
-                while True:
-                    password = getpass(f'Password for {user.username}: ')
-                    if user.password_check(password):
-                        print('logged in!')
-                        break
-                    else:
-                        print('wrong password!')
-
-            else:
-                print(f'User {username} not found. Check if username is correct or create a new user')
-
