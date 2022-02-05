@@ -1,0 +1,25 @@
+{
+    "users": [
+        {
+            "name": "vitor",
+            "pass": "gAAAAABh6GI7m7c2GdcXgnAromKU9c4hpMv6rqQRMi-OsbQv4-knUXQy7RQXka14UbGKZbX5V3rwZSmYuMTrk9GBwl6EAef3Hw==",
+            "id": 1000
+        },
+        {
+            "name": "test",
+            "pass": "gAAAAABh_dIVqAIrCuKnQjQ_qLr7F9nVlv542gdutq-DKsnHdWTUUcAd6XFXU2gP8k_PAHvNyas562tOuJ89UcTN9qP8RAFNpA==",
+            "id": 1001
+        },
+        {
+            "name": "arnaldo",
+            "pass": "gAAAAABh_dOjT2KB4ryqz0ayssXwaQbOLDhmqf588orhkP1_OsfORoX3Oleim_GoLn4sCkTfbLLa9f98gm5UnADUr9LdlhGhMQ==",
+            "id": 1002
+        },
+        {
+            "name": "test2",
+            "pass": "gAAAAABh_dhTcmI8trIqC2kZSAotxFrJsjNUDoo6KZEHFFi2aW1WMcWVHE8mI_O2HIX_ycXx3pqyv4Qo-GfpvW0Prt-wB_Fgag==",
+            "id": 1003
+        }
+    ],
+    "id_count": 1003
+}

@@ -66,10 +66,10 @@ def encrypt_text(text) -> bytes:
     # generate fernet object
     try:
         fernet = load_key()
-        print('used load_key')
+        # print('used load_key')
     except FileNotFoundError:
         fernet = generate_key()
-        print('used generate_key')
+        # print('used generate_key')
 
     encrypted = fernet.encrypt(text.encode()) # string must be converted to bytes
     return encrypted.decode() # decode bytes to string (neeaded to write to json)

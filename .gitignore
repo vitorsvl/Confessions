@@ -3,6 +3,8 @@ src/__pycache__/**
 data/test.json
 test.txt
 
+view/view_tests.py
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
