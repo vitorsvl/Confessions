@@ -39,6 +39,7 @@ def define_blend(theme) -> str:
 THEME = choice(list(THEME_COLORS.keys()))
 THEME2 = define_blend(THEME) 
 COLOR_THEME = THEME_COLORS.get(THEME)
+COLOR_THEME2 = THEME_COLORS.get(THEME2)
 console = Console()
 
 
@@ -58,6 +59,8 @@ def display_title(theme: str, blend=False, theme2=None):
     Display the application main title
         theme options : sky, sea, gold, rose, violet or misc 
     """
+    console.print('[b i]Welcome to[/b i]')
+    time.sleep(1)
     sty_title = Text()
     if not blend and not theme2: # no blend
         for line in TITLE:
@@ -84,13 +87,14 @@ def display_title(theme: str, blend=False, theme2=None):
             n_line += 1
         sty_title = sty_title[:-1] 
     Console().print(sty_title)
+    time.sleep(2)
 
 
 # NOTE MENU NOTE #
 
 def display_menu(options):
     """
-    param options : List of strings, the options to be displayed in the menu
+    param options : List of Text objects, the options to be displayed in the menu
     """
 
     g_size = 0
@@ -99,14 +103,14 @@ def display_menu(options):
 
     # generating options string
     idx = 1
-    menu_str = ''
+    menu_str = Text()
     for option in options:
-        points = '.........' # TAMANHO FIXO + INDICE = 10 espaços
+        points = Text('.........') # TAMANHO FIXO + INDICE = 10 espaços
         if g_size > len(option):
             diff = g_size - len(option)
-            points += '.'*diff
+            points += Text('.'*diff)
 
-        menu_str += option + points + str(idx) + '\n'
+        menu_str += option + points + Text(str(idx)) + Text('\n')
         idx += 1
         
     menu_str = menu_str[:-1] # removing last \n
@@ -116,7 +120,7 @@ def display_menu(options):
             menu_str,
             padding=(1, 2),
             title="[b white]Menu",
-            border_style=COLOR_THEME,
+            border_style=COLOR_THEME2,
 
         )
     Console().print(p)
@@ -156,7 +160,7 @@ def clear():
 def login():
     console = Console()
     while True:
-        header('Login')
+        header('👤 Login', COLOR_THEME)
         console.print("Enter your username or click [bold]ENTER[/bold] to create a new user")
         username = input()
         if not username:
@@ -182,7 +186,7 @@ def first_screen():
     user = login()
     time.sleep(0.8)
     clear()
-    name_f = fancytize(user.username, color=COLOR_THEME, bold=True)
+    name_f = fancytize(user.username, color=COLOR_THEME2, bold=True)
     Console().print(Text("Welcome back ") + name_f + Text('!'), style='b')
     time.sleep(0.8)
     return user
@@ -222,7 +226,7 @@ def new_confession(user: User):
         "Write down your toughts",
     ]
     console.print(choice(new_conf_prompts) + '(click ENTER when you\'re done)', 
-        style=Style(color=COLOR_THEME, italic=True))
+        style=Style(color=COLOR_THEME2, italic=True))
 
     conf = input()
     confirm = Confirm.ask("Save your confession?")
@@ -231,7 +235,7 @@ def new_confession(user: User):
         console.print(fancytize("Your confession was saved!", type='success'))
 
 
-def view_confessions(conf: List, index=True, max_len=80):
+def  view_confessions(conf: List, index=True, max_len=80):
     """
     Print confessions in rich text
         conf : List containing the confessions
@@ -243,7 +247,7 @@ def view_confessions(conf: List, index=True, max_len=80):
         time.sleep(2)
         return
 
-    header('My Confessions')
+    header('📜 My Confessions', COLOR_THEME)
     # hline = '----------'
     table = Table( 
         #title=hline + 'My Confessions' + hline,
@@ -265,7 +269,7 @@ def view_confessions(conf: List, index=True, max_len=80):
         idx = 1 
         for c in conf:
             tex = (c[:max_len] + '...') if len(c) > max_len else c
-            table.add_row(Text(str(idx) + '.', style=Style(color=COLOR_THEME, bold=True)), tex)
+            table.add_row(Text('    ' + str(idx) + '.', style=Style(color=COLOR_THEME2, bold=True)), tex)
 
             idx += 1
     console.print(table)
@@ -273,15 +277,15 @@ def view_confessions(conf: List, index=True, max_len=80):
     return list(range(1, idx))
 
 
-def header(text: str) -> None: # TODO change color of horizontal lines 
+def header(text: str, color: str, align="left") -> None: # TODO change color of horizontal lines 
     highlight = ReprHighlighter()
     console.print()
-    console.rule(highlight(text))
+    console.rule(highlight(text), style=color, align=align)
     console.print()
 
 
 def display_confession(conf):
-    c = Panel(conf, border_style=COLOR_THEME, expand=False)
+    c = Panel(conf, border_style=COLOR_THEME2, expand=False)
     console.print(c)  
     pr = Prompt.ask("Type [b]d[/b] to [b]delete[/b] or [b]q[/b] to [b]quit[/b]", 
         choices=['D', 'Q', 'd', 'q'], show_choices=False, default='q', show_default=False)
@@ -290,10 +294,10 @@ def display_confession(conf):
 
 def menu_confessions(user: User):
     while True:
-        option = display_menu(['New confession', 'My confessions', 'Logout'])
+        option = display_menu([Text('💭 New confession'), Text('📃 My confessions'), Text('⚪ Logout')])
         
         if option == 1:
-            header('New confession')
+            header('🪶 New confession', COLOR_THEME)
             new_confession(user)
             time.sleep(2)
             clear()
@@ -317,6 +321,8 @@ def menu_confessions(user: User):
 
                     if action == "d":
                         del_conf(user, real_idx)
+                        console.print(fancytize("Confession deleted!", type='success'))
+                        time.sleep(1.5)
 
                     elif action == "q":
                         pass

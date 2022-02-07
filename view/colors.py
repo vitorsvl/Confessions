@@ -19,16 +19,14 @@ WARNING = '#f0ba3c'
 
 ### THEMES
 THEME_COLORS = {
-        'sky': '#708CE2',
-        'sea': '#70F3C6',
-        'gold': '#FFF187',
-        'rose': '#FF89A1',
-        'violet': '#CC79FF'
+        'sky': '#72a3ed',
+        'sea': '#7be3b9',
+        'gold': '#ffc787',
+        'rose': '#ff94a2',
+        'violet': '#ac5ed6'
 }
         
 ### PATTERNS FOR THE TITLE ConfessionS
-'#0073BA','#0C7DC3','#1886CB','#248FD3','#3198DA','#3DA1E1','#49AAE7','#55B2EC','#61BBF1','#6DC2F5','#79CAF9','#85D1FD','#91D8FF','#9EDEFF','#AAE4FF','#B6EAFF','#C2EFFF'
-'#015976','#015C83','#015E91','#015D9F','#005BAC','#0058BA','#1367C8','#2776D4','#3A84DF','#4E93E9','#61A1F1','#74B0F8','#88BDFD','#9BCAFF','#AED6FF','#C2E2FF'
 SCALES = {
         'sky' : ['#082687','#0058BA','#1367C8','#2776D4','#3A84DF','#4E93E9','#74B0F8','#88BDFD','#9BCAFF','#AED6FF', '#C2E2FF', '#176ffc', '#4a6acf', '#389cff'], 
         'sea': ['#018777','#43d1b7','#019245','#01A857','#01BE6B','#00D482','#25EDA9','#4BF0B8','#70F3C6','#95F6D5','#BAF9E4', '#38d9ef', '#64ed98'], 
@@ -58,4 +56,12 @@ MIRROR = {
 
 # TODO baguncar as cores no print
 
+'''
+📜 my confessions
+🪶 new confession
+📃 my confessions in menu
+💭 new confession in menu
+👤 login
+'''
 
+'⬅️🔙🪶✍️📃📜✒️👤✅☑️➕💭👾'

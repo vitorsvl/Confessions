@@ -27,9 +27,7 @@ def main(): # where it should be?
 
 # run
 main()
-
-
-
 ### PARTE 3 ### TODO 
 # Criar menu para inicial com login, criar user e sair do app ???
-# criar funcionalidade para deletar usuário (confessions junto ofc)
+# criar funcionalidade para deletar usuário (confessions junto ofc) TODO
+# Criar mecanismo de export para as confessions (txt ou markdown ou html?)
