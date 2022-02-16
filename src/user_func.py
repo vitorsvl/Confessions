@@ -1,8 +1,11 @@
+from time import time
+from typing import Dict
 from src.User import User
-from src.data_handle import USR_DATA, add_new_user, delete_conf, get_usernames, load_json, add_confID, save_conf, get_confessions
+from src.data_handle import USR_DATA, add_new_user, delete_conf, get_usernames, load_json, save_theme_json, save_conf, get_confessions
 
 
 from rich.console import Console
+from datetime import datetime
 
 # DONE Descobrir como funciona json. Objetivo: Criar um arquivo json para
 # salvar os dados dos usuários. Talvez o username em cada 'chave' e vinculadas
@@ -28,19 +31,23 @@ def user_found(username) -> bool:
 
 
 def create_user():
-    un = input('Username: ')
-    # create new user 
-    if not user_found(un): 
-        console.print(f'{un} is avaliable!', style='bold #eeeeff')
-        user = User(un)
-        user.create_password
-        USERS_CACHE.append(user)
-        add_new_user(user)
-        # add new user's id to conf.json file
+    while True:
+        un = input('Username: ')
+        # create new user 
+        if len(un) < 3:
+            console.print('Usename must have at least 3 characters', style='#fc3d3d')
+        else:
+            if not user_found(un): 
+                console.print(f'{un} is avaliable!', style='bold #eeeeff')
+                user = User(un)
+                user.create_password
+                USERS_CACHE.append(user)
+                add_new_user(user)
 
-        console.print('Your user was successfully created! You can login now', style='#3afc85')
-    else:
-        console.print('Username already taken. Please enter a different one', style='#fc3d3d')
+                console.print('Your user was successfully created! You can login now', style='#3afc85')
+                return
+            else:
+                console.print('Username already taken. Please enter a different one', style='#fc3d3d')
 
 
 def get_user(username) -> User:
@@ -61,7 +68,7 @@ def get_user(username) -> User:
         # getting the confessions
         confessions = get_confessions(user_data["id"])
 
-        user = User(username, passw=user_data.get('pass'), id=user_data.get('id'), conf=confessions) 
+        user = User(username, passw=user_data.get('pass'), id=user_data.get('id'), conf=confessions, theme=user_data.get('theme')) 
         return user
     else:
         console.print('error - user not found', style='#fc3d3d')
@@ -74,13 +81,19 @@ def get_user(username) -> User:
         # for user in USERS_CACHE:
             # add_new_user(user)
         # print('Users saved!')
+def create_conf(text: str) -> dict:
+    """Creates a confession with the given text and returns in dict format with text and datetime"""
+    d = dict.fromkeys(["text", "time"])
+    d["text"] = text
+    d["time"] = datetime.now().isoformat()
+    return d
 
 
-def new_conf(conf: str, author: User):
+def new_conf(conf: Dict, author: User): 
     """
     Create a new confession
-        conf : confession text (str)
-        author : user author of the confession (User instance)
+        conf : dict representing the confession (text + datetime)
+        author : user author of the confession (User object)
     """
     # saving to class
     author.add_confession(conf)
@@ -96,3 +109,10 @@ def del_conf(user: User, conf_idx):
     user.del_confession(conf_idx)
     # del from file
     delete_conf(conf_idx, user.id)
+
+
+def save_theme(theme: str, user_id):
+    """Save user theme preference"""
+    save_theme_json(theme, user_id)
+    
+    

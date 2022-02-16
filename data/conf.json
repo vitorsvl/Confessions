@@ -1,16 +1,38 @@
 {
     "1000": [
-        "o o o my god",
-        "whats happening to me?",
-        "Walking down montana o o o",
-        "Im doing a great job here"
+        {
+            "text": "o o o my god",
+            "time": "2022-02-11T15:24:17.034689"
+        },
+        {
+            "text": "whats happening to me?",
+            "time": "2022-02-11T15:24:17.034689"
+        },
+        {
+            "text": "Walking down montana o o o",
+            "time": "2022-02-11T15:24:17.034689"
+        },
+        {
+            "text": "Im doing a great job here",
+            "time": "2022-02-11T15:24:17.034689"
+        }
     ],
-    "1001": [
-        "my password is 5555"
-    ],
-    "1002": [
-        "my password is imacat",
-        "I enjoy laying down in my father's lap"
-    ],
-    "1003": []
+    "1001": [],
+    "1002": [],
+    "1003": [],
+    "1004": [],
+    "1005": [
+        {
+            "text": "testando123",
+            "time": "2022-02-11T22:56:53.123901"
+        },
+        {
+            "text": "thats a new confession and idk what to write here but I want to do something very loooooooooooooooooooooooooooooooooooooooooooooooong so I'll be here just writing stuff and Im sleepy so yeah, I think its enough cause Im lazy and Im worried if the ' will mess everything up and I really hope it doest cause i dont want to fix anything right now",
+            "time": "2022-02-15T22:38:27.253559"
+        },
+        {
+            "text": "just another confession",
+            "time": "2022-02-15T22:38:47.997523"
+        }
+    ]
 }

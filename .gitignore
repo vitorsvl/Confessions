@@ -4,6 +4,7 @@ data/test.json
 test.txt
 
 view/view_tests.py
+tests.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

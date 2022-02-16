@@ -6,19 +6,21 @@ from src.crypto import decrypt_text, encrypt_text
 from src.data_handle import load_json, update_json, add_confID, USR_DATA
 
 
-
 class User:
     def __init__(self, uname, **kwargs) -> None:
         self._username = uname
         if not kwargs:
             self._password = None
             self._id = self.create_id
-            self._confessions = []
+            self._confessions = list()
+            self._theme = None
 
         else:
             self._password = decrypt_text(kwargs['passw'].encode()) # does it works?
             self._id = kwargs['id']
             self._confessions = kwargs['conf']
+            self._theme = kwargs['theme']
+
 
     def __str__(self) -> str:
         return f'User object {self._username}'
@@ -32,6 +34,10 @@ class User:
         return self._id
     
     @property
+    def theme(self) -> str:
+        return self._theme
+    
+    @property
     def confessions(self) -> List:
         return self._confessions
 
@@ -40,6 +46,7 @@ class User:
         d = {
             "name": self._username,
             "pass": encrypt_text(self._password), # does it works?
+            "theme": self._theme,
             "id": self._id
         }
         return d
@@ -80,7 +87,4 @@ class User:
         self._confessions.pop(idx)
 
 
-    def add_conf_test(self, conf: List): #FOR TESTING PURPOSES
-        for c in conf:
-            self._confessions.append(c)
         

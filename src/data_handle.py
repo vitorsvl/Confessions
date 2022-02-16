@@ -1,5 +1,6 @@
-import json
 from typing import Dict, List
+from datetime import datetime
+import json
 import sys
 import os
 
@@ -20,12 +21,13 @@ def load_json(path) -> Dict:
 
 
 def update_json(json_data: dict, json_file: str):
-    """Updates json file.
+    """
+    Updates json file.
             json_data : dictionary representing the updated data
             json_file : path to json file 
     """
     # Sets file's current position at offset.
-    with open(json_file, 'r+') as file:
+    with open(json_file, 'w') as file:
         file.seek(0)
         # convert back to json.
         json.dump(json_data, file, indent = 4)
@@ -51,6 +53,17 @@ def get_usernames() -> List:
     return usernames
 
 
+def save_theme_json(theme: str, user_id):
+    """
+    Save the user theme to json file
+    """
+    data = load_json(USR_DATA)
+    for u in data['users']:
+        if u.get("id") == (user_id or str(user_id)): 
+            u['theme'] = theme
+    update_json(data, USR_DATA)
+
+
 #### Confessions functions ####
 CONF_DATA = 'data/conf.json'
 
@@ -62,37 +75,29 @@ def add_confID(id):
     update_json(data, CONF_DATA)
 
 
-def save_conf(conf: str, user_id):
-
+def save_conf(conf: dict, user_id): 
+    """Save confession text to json file"""
     data = load_json(CONF_DATA)
-    
+    user_id = str(user_id)
     try:
         data[user_id].append(conf)
+
     except KeyError:
-        try:
-            data[str(user_id)].append(conf)
-        except KeyError:
-            print('error - user not found')
-            return
+        print('error - user not found')
+        return
     update_json(data, CONF_DATA)
     
 
 def delete_conf(conf_id, user_id):
     """delete confession from json file"""
     data = load_json(CONF_DATA)
+    user_id = str(user_id)
     try:
-        del data[str(user_id)][conf_id]
+        del data[user_id][conf_id]
     except KeyError:
-        try:
-            del data[user_id][conf_id]
-        except KeyError:
-            print('error - user not found')
-            return
-    print(data)
-    # update_json(data, CONF_DATA)
-    open(CONF_DATA, "w").write(
-    json.dumps(data, sort_keys=True, indent=4, separators=(',', ': '))
-)
+        print('error - user not found')
+        return
+    update_json(data, CONF_DATA)
 
 
 def get_confessions(user_id) -> List:
