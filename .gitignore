@@ -5,6 +5,8 @@ test.txt
 
 view/view_tests.py
 tests.py
+intro.py
+first_run
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

@@ -3,14 +3,8 @@
         {
             "name": "vitor",
             "pass": "gAAAAABh6GI7m7c2GdcXgnAromKU9c4hpMv6rqQRMi-OsbQv4-knUXQy7RQXka14UbGKZbX5V3rwZSmYuMTrk9GBwl6EAef3Hw==",
-            "theme": "lgbt",
+            "theme": "seagold",
             "id": 1000
-        },
-        {
-            "name": "test",
-            "pass": "gAAAAABh_dIVqAIrCuKnQjQ_qLr7F9nVlv542gdutq-DKsnHdWTUUcAd6XFXU2gP8k_PAHvNyas562tOuJ89UcTN9qP8RAFNpA==",
-            "theme": null,
-            "id": 1001
         },
         {
             "name": "arnaldo",
@@ -19,17 +13,11 @@
             "id": 1002
         },
         {
-            "name": "test2",
-            "pass": "gAAAAABh_dhTcmI8trIqC2kZSAotxFrJsjNUDoo6KZEHFFi2aW1WMcWVHE8mI_O2HIX_ycXx3pqyv4Qo-GfpvW0Prt-wB_Fgag==",
-            "theme": null,
-            "id": 1003
-        },
-        {
             "name": "test3",
             "pass": "gAAAAABiBHcuH21FXYfaL_y3xyuAHgFcvTAhwZFFs4B9gz0iyFE3wJd6KaUEx0_Tte1fJJMIHUAncci-Fpiayx87d0IoAiC5YQ==",
-            "theme": "swamp",
+            "theme": "autumn",
             "id": 1005
         }
     ],
-    "id_count": 1005
+    "id_count": 1010
 }

@@ -22,7 +22,6 @@ Funcionalidades iniciais
 def main(): # where it should be?
     try:
         while True: # main loop
-
             user = first_screen() # title até fim do login
             menu_confessions(user) # menu e prompt, termina quando a opção logout é escolhida 
     except KeyboardInterrupt:
@@ -32,7 +31,9 @@ main()
 ### PARTE 3 ### TODO 
 # ??? Criar menu para inicial com login, criar user e sair do app ???
 
-# TODO criar funcionalidade para deletar usuário (confessions junto ofc) 
+# DONE criar funcionalidade para deletar usuário (confessions junto ofc) 
+   # TODO Encontrar uma forma de deletar o objeto, del n está funcionando, usuário permanece na memória do programa
+   # excluído apenas do JSON  
 
 # TODO Criar mecanismo de export para as confessions (txt ou markdown ou html?)
 
@@ -62,3 +63,9 @@ main()
 
 # TODO FINALIZANDO TODO
 # O diretório confessions data deve ser criado na primeira utilização
+
+# LATER TODO 
+# Tornar multiplataforma (por enquanto só funciona no windows)
+# fazer mais testes antes de criar o executável
+
+# Fazer últimos testes, git push e o release 

@@ -5,13 +5,13 @@
 from random import choice
 
 
-l1 = '            .ooo.                                                                 '
-l2 = '            o   o. .ooo.   ooo.    ooo.  .ooo   oo.   oo.  o   .ooo.  ooo.    ooo.'
-l3 = '            o      o   o   o   o   o     o     o     o     .   o   o  o   o  o    '
-l4 = '            o      o   o   o   o   oo.   ooo   .oo.  .oo.  o   o   o  o   o  .ooo.'
-l5 = '            o  .o  o   o   o   o   o     o        o     o  o.  o   o  o   o      o'
-l6 = '             ooo    ooo    o      .o     .ooo   oo    oo    o   ooo   o       ooo '
-l7 = '                                  o                                               '
+l1 = '            .ooo.                                                            .ooo. '
+l2 = '            o   o. .ooo.   ooo.    ooo.  .ooo   oo.   oo.  o   .ooo.  ooo.   o     '
+l3 = '            o      o   o   o   o   o     o     o     o     .   o   o  o   o  ooo.  '
+l4 = '            o      o   o   o   o   oo.   ooo   .oo.  .oo.  o   o   o  o   o     oo.'
+l5 = '            o  .o  o   o   o   o   o     o        o     o  o.  o   o  o   o      o '
+l6 = '             ooo    ooo    o      .o     .ooo   oo    oo    o   ooo   o      oooo  '
+l7 = '                                  o                                                '
 
 TITLE = [l1, l2, l3, l4, l5, l6, l7]
 

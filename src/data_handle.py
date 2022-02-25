@@ -37,13 +37,28 @@ def update_json(json_data: dict, json_file: str):
 USR_DATA = 'data/user_data.json'
 
 def add_new_user(user):
-    """Add new user's data to the json data file"""
+    """Add new user's data to the json file"""
     data = load_json(USR_DATA)
 
     # appending user's data to json data
     data["users"].append(user.to_dict)
     # Sets file's current position at offset.
     update_json(data, USR_DATA)
+
+
+def delete_user(user):
+    """Delete user data from json file"""
+    # deleting user info
+    data = load_json(USR_DATA)
+    for d in data["users"]:
+        if d.get("id") == user.id:
+            idx = data["users"].index(d)
+            break
+    data["users"].pop(idx)
+    update_json(data, USR_DATA)
+    # deleting user confessions
+    user_id = user.id
+    delete_confessions(user_id)
 
 
 def get_usernames() -> List:
@@ -115,7 +130,14 @@ def get_confessions(user_id) -> List:
 
         return conf
 
-         
+
+def delete_confessions(user_id):
+    """Delete all the confessions of an user with the id entry"""
+    data = load_json(CONF_DATA)
+    del data[str(user_id)]
+    update_json(data, CONF_DATA)
+
+
 if __name__ == '__main__':
 
     # save_conf("my first confession", '124')

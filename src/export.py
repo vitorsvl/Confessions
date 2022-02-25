@@ -2,6 +2,7 @@ import os
 from datetime import datetime
 from typing import Iterable, List
 
+LIM = 90 # the default line len limit
 
 def get_dir_path(user=None) -> str:
     """
@@ -12,10 +13,12 @@ def get_dir_path(user=None) -> str:
     parent_dir = os.path.abspath(os.path.join(cwd, os.pardir)) # path to dir where the project is saved
     dir_name = "confessions data"
     path = os.path.join(parent_dir, dir_name) # path to confessions data dir, where the exports will be saved
+    if not os.path.exists(path):
+        os.mkdir(path) 
     if user:
-        path = os.path.join(path, user + '.txt')
-        
+        path = os.path.join(path, user + '.txt')        
     return path
+
 
 def save_export(export_str: str, username: str):
     """
@@ -28,6 +31,7 @@ def save_export(export_str: str, username: str):
     path_to_file = os.path.join(path_to_dir, file_name)
     with open(path_to_file, "w") as file:
         file.write(export_str)
+
 
     
 def nearest_char(s: str, pivot: int, char=' ') -> int:
@@ -57,16 +61,27 @@ def nearest_char(s: str, pivot: int, char=' ') -> int:
                 if s[right] == char: return right
                 right += 1
 
-        else: return None # char was not found in string
+        else: # char was not found in string
+            return None
 
 
+def insert_str(s: str, index: int, char: str) -> str:
+    """Insert a char at the desired position in a string"""
+    return s[:index] + char + s[index:]
+    
+     
 def str_replace_at_index(s: str, indexes: Iterable, char: str) -> str:
     """
     Replace the char in the specified positions of the str with the given char
     """
     l = list(s)
+    div = 0
     for i in indexes:
-        l[i] = char
+        if not i:
+            div += LIM
+            l.insert(div-1, '-' + char)
+        else:
+            l[i] = char
     return str().join(l)
 
 
@@ -80,21 +95,26 @@ def text_splitlines(text: str, limit=90) -> str:
     else:
         ref_points = [p for p in range(limit, tlengh, limit)] # reference points based on line len limit
         split_points = [nearest_char(text, point) for point in ref_points] # getting the nearest blank spaces to the ref points
-        text_sl = str_replace_at_index(text, split_points, '\n') # replacing the determined blank spaces with \n
+        text_sl = str_replace_at_index(text, split_points, char='\n') # replacing the determined blank spaces with \n
         return text_sl
  
+
+def format_datetime(dt) -> str:
+    """Return datetime as str in format %d/%m/%Y, %H:%M"""
+    datetime_format = "%d/%m/%Y, %H:%M" # Default format for datetime output
+    dtf = datetime.fromisoformat(dt)
+    dtf = dtf.strftime(datetime_format) # datetime str
+    return dtf
+
 
 def generate_export_str(conf_list: List) -> str:
     """
     Return a list of confessions in str to export format
     """
-    datetime_format = "%d/%m/%Y, %H:%M" # Default format for datetime output
     export_str = ''
 
     for c in conf_list:
-        dt = datetime.fromisoformat(c["time"])
-        dt = dt.strftime(datetime_format) # datetime str
-
+        dt = format_datetime(c["time"])
         export_str = export_str + dt + "\n\n"
         conf_text = text_splitlines(c["text"])
         export_str = export_str + conf_text + "\n\n\n" # remove 3 last \n 

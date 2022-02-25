@@ -1,11 +1,11 @@
-from time import time
-from typing import Dict
+from src.data_handle import USR_DATA, add_new_user, delete_conf, delete_user, get_usernames, load_json, save_theme_json, save_conf, get_confessions
 from src.User import User
-from src.data_handle import USR_DATA, add_new_user, delete_conf, get_usernames, load_json, save_theme_json, save_conf, get_confessions
-
 
 from rich.console import Console
+from rich.prompt import Prompt
+
 from datetime import datetime
+from typing import Dict
 
 # DONE Descobrir como funciona json. Objetivo: Criar um arquivo json para
 # salvar os dados dos usuários. Talvez o username em cada 'chave' e vinculadas
@@ -73,7 +73,17 @@ def get_user(username) -> User:
     else:
         console.print('error - user not found', style='#fc3d3d')
         return None
-        
+
+
+def del_user(user: User) -> bool:
+    while True:
+        password = Prompt.ask(f'Password for [b]{user.username}[/b]', password=True)
+        if user.password_check(password): # login success
+            delete_user(user) # deleting user's data from json files 
+            del user # deleting user object
+            return True
+        else:
+            console.print('Password incorrect', style='#fc3d3d')   
 # UNUSED
 # def save_cache():
    # """save cached users to file"""

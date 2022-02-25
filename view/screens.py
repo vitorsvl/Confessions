@@ -5,10 +5,10 @@ ROOT_PATH = os.path.dirname(os.path.abspath("run.py"))
 sys.path.insert(0, os.path.dirname(os.path.abspath("run.py")))
 
 from view.colors import RAINBOW_COLORS, SCALES, THEME_COLORS, THEMES, TITLE, ERROR, WARNING, SUCCESS, RAINBOW
-
 from src.User import User
-from src.user_func import create_conf, create_user, del_conf, get_user, new_conf, save_theme, user_found
-from src.export import export_confessions, get_dir_path, save_export
+from src.user_func import create_conf, create_user, del_conf, del_user, get_user, new_conf, save_theme, user_found
+from src.export import export_confessions, format_datetime, get_dir_path, save_export
+from intro import introduction # the intro
 
 from rich import console
 from rich import box
@@ -136,14 +136,22 @@ def choose_theme(themes: dict) -> str:
     
     while True:
         console.print(table)
-        p = Prompt.ask("Choose one of the avaliable themes below or [cornsilk1 b]C[/cornsilk1 b] to cancel", 
+        p = Prompt.ask("Choose one of the avaliable themes or [cornsilk1 b]C[/cornsilk1 b] to cancel", 
             choices=[str(i) for i in list(range(1, idx))].append('c'), show_choices=True)
 
         if p.lower() == 'c':
             return
         else:
-            if confirm(Text("Apply ") + theme_repr(names[int(p)-1]) + Text(" theme?")):
-                return names[int(p)-1]
+            try: 
+                pos = int(p) - 1
+                my_theme = names[pos]
+                if confirm(Text("Apply ") + theme_repr(my_theme) + Text(" theme?")):
+                    return my_theme
+            except (IndexError, ValueError) as _:
+                console.print(fancytize("Opção inválida!", type='warning'))
+                time.sleep(1)
+                clear()
+
     
 
 ### TITLE
@@ -263,9 +271,14 @@ def login():
                         console.print(fancytize('Password incorrect', type='error'))
             else:
                 console.print(fancytize(f'User {username} not found. Check if username is correct or create a new user', type='warning'))
-
+                time.sleep(1.5)
+                clear()
 
 def first_screen():
+    # introduction must run only once
+    if os.path.isfile('first_run'): # using a file to do that
+        introduction() # run only if first_run file exists
+        os.remove('first_run')
     define_theme(choice(list(THEMES.keys())[:-1])) # first theme is chosen randomly, lgbt theme is not included in random choice
     display_title(THEME1, theme2=THEME2, first=True, char='*')  
     time.sleep(0.8)
@@ -274,9 +287,6 @@ def first_screen():
     clear()
     if user.theme: 
         define_theme(user.theme) # set user theme
-        print(f'theme changed to {user.theme}')
-        console.print(COLOR_THEME1)
-        console.print(COLOR_THEME2)
 
     display_title(THEME1, THEME2, char='*')
     name_f = fancytize(user.username, color=COLOR_THEME1, bold=True)
@@ -297,14 +307,15 @@ def new_confession(user: User):
 
     conf = input()
     if conf.lower() != 'c':
+        print()
         confirm = Confirm.ask("Save your confession?")
         if confirm:
-            confd = create_conf(conf)
-            new_conf(confd, user)
+            confd = create_conf(conf) 
+            new_conf(confd, user) 
             console.print(fancytize("Your confession was saved!", type='success'))
 
 
-def view_confessions(conf: List, index=True, max_len=80):
+def view_confessions(conf: List, index=True, max_len=110):
     """
     Print confessions in rich text
         conf : List containing the confessions
@@ -317,7 +328,6 @@ def view_confessions(conf: List, index=True, max_len=80):
         return
 
     header('📜 My Confessions', COLOR_THEME1)
-    # hline = '----------'
     table = Table( 
         show_header=False,
         show_lines=False,
@@ -327,35 +337,48 @@ def view_confessions(conf: List, index=True, max_len=80):
         #row_styles=['dim', 'none']
         )
     if not index:
+        table.add_column()
         for c in conf:
-            tex = (c["text"][:max_len] + '..') if len(c) > max_len else c
-            table.add_row(tex)
+            dt = format_datetime(c["time"])
+            tex = (c["text"][:max_len] + '.. ') if len(c["text"]) > max_len else c["text"]
+            table.add_row(tex, dt)
     else:
         table.add_column()
-        # table.add_column()
+        table.add_column()
 
         idx = 1 
         for c in conf:
-            tex = (c["text"][:max_len] + '...') if len(c) > max_len else c["text"]
-            table.add_row(Text('    ' + str(idx) + '.', style=Style(color=COLOR_THEME2, bold=True)), tex)
-
+            dt = format_datetime(c["time"])
+            tex = ((c["text"])[:max_len] + '.. ') if len(c["text"]) > max_len else c["text"]
+            idxf = Text('    ' + str(idx) + '.', style=Style(color=COLOR_THEME2, bold=True))
+            # columns        1   2   3
+            table.add_row(idxf, tex, dt)
             idx += 1
     console.print(table)
     print()
-    return list(range(1, idx))
+    return list(range(1, idx))  #TODO melhorar essa função, criar uma coluna na tabela para as datas
 
 
 def display_confession(conf: dict):
-    c = Panel(conf["text"] + '    ' + conf["time"], border_style=COLOR_THEME2, expand=False)
+    clear()
+    c = Panel(conf["text"], title=Text(format_datetime(conf["time"])), border_style=COLOR_THEME2, expand=False)
     console.print(c)  
     pr = Prompt.ask("Type [b]d[/b] to [b]delete[/b] or [b]q[/b] to [b]quit[/b]", 
         choices=['D', 'Q', 'd', 'q'], show_choices=False, default='q', show_default=False)
-    return pr.lower() # d, q ou e
+    return pr.lower() # d, q
 
 
 def menu_confessions(user: User):
+    options = [
+        Text('💭 New confession'), #1
+        Text('📃 My confessions'), #2
+        Text('🦄 Change theme'), #3
+        Text('📝 Export confessions'), #4 
+        Text('💀 Delete user'), #5
+        Text('🔘 Logout') #6
+        ]
     while True:
-        option = display_menu([Text('💭 New confession'), Text('📃 My confessions'), Text('🦄 Change theme'), Text('📝 Export confessions'), Text('🔘 Logout')])
+        option = display_menu(options)
         if option == 1:
             header('🪶 New confession', COLOR_THEME1)
             new_confession(user)
@@ -375,18 +398,24 @@ def menu_confessions(user: User):
                 else:
                     try:
                         real_idx = int(idx)-1
-                        action = display_confession(user.confessions[real_idx]) # action can be D, E or Q (delete, edit, quit)
-                        if action == "d":
-                            del_conf(user, real_idx)
-                            console.print(fancytize("Confession deleted!", type='success'))
-                            time.sleep(1.5)
+                        while True:
+                            action = display_confession(user.confessions[real_idx]) # action can be D, E or Q (delete, edit, quit)
+                            if action == "d":
+                                del_conf(user, real_idx)
+                                console.print(fancytize("Confession deleted!", type='success'))
+                                time.sleep(1.5)
+                                break
 
-                        elif action == "q":
-                            pass
-                    except IndexError:
-                         console.print(fancytize("Option unavaliable!", type='warning'))
-                         
-            clear()    
+                            elif action == "q":
+                                break
+                            
+                            else: 
+                                console.print(fancytize("Option unavaliable!", type='warning'))
+
+                    except (ValueError, IndexError) as _:
+                        console.print(fancytize("Option unavaliable!", type='warning'))  
+                        time.sleep(1)            
+                clear()    
 
         elif option == 3: # change theme
             usr_theme = choose_theme(THEMES)
@@ -407,8 +436,17 @@ def menu_confessions(user: User):
                 console.print(fancytize("Confessions exported!", type='success'))
                 time.sleep(1.6)
                 clear()
+        
+        elif option == 5: # Delete user
+            dl = confirm('Proceed to delete this user and all their confessions? ')
+            if dl:
+                if del_user(user): # delete exports too ???
+                    console.print(fancytize("User was successfully deleted!", type='success'))
+            time.sleep(2)
+            clear()
+            break
 
-        elif option == 5: # logout
+        elif option == 6: # logout
             b = confirm('Are you sure?')
             if b:
                 clear()
@@ -433,8 +471,3 @@ if __name__ == '__main__':
 
         #user.add_conf_test(c)
         menu_confessions(user)
-
-
-# NOTE IDEA Fazer os itens de exibição aparecerem centralizados 
-# e os itens de input justificado para esquerda
-#  
