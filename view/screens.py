@@ -8,7 +8,7 @@ from view.colors import RAINBOW_COLORS, SCALES, THEME_COLORS, THEMES, TITLE, ERR
 from src.User import User
 from src.user_func import create_conf, create_user, del_conf, del_user, get_user, new_conf, save_theme, user_found
 from src.export import export_confessions, format_datetime, get_dir_path, save_export
-from intro import introduction # the intro
+# from intro import introduction # the intro
 
 from rich import console
 from rich import box
@@ -276,9 +276,9 @@ def login():
 
 def first_screen():
     # introduction must run only once
-    if os.path.isfile('first_run'): # using a file to do that
-        introduction() # run only if first_run file exists
-        os.remove('first_run')
+    # if os.path.isfile('first_run'): # using a file to do that
+        # introduction() # run only if first_run file exists
+        # os.remove('first_run')
     define_theme(choice(list(THEMES.keys())[:-1])) # first theme is chosen randomly, lgbt theme is not included in random choice
     display_title(THEME1, theme2=THEME2, first=True, char='*')  
     time.sleep(0.8)

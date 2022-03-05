@@ -1,7 +1,5 @@
 import json
-from winreg import LoadKey
 from cryptography.fernet import Fernet
-
 
 
 def load_data():

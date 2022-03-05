@@ -1,4 +1,5 @@
 /projc/
+/cvenv/
 src/__pycache__/**
 data/test.json
 test.txt

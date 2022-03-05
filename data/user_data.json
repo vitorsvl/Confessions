@@ -1,23 +1,4 @@
 {
-    "users": [
-        {
-            "name": "vitor",
-            "pass": "gAAAAABh6GI7m7c2GdcXgnAromKU9c4hpMv6rqQRMi-OsbQv4-knUXQy7RQXka14UbGKZbX5V3rwZSmYuMTrk9GBwl6EAef3Hw==",
-            "theme": "seagold",
-            "id": 1000
-        },
-        {
-            "name": "arnaldo",
-            "pass": "gAAAAABh_dOjT2KB4ryqz0ayssXwaQbOLDhmqf588orhkP1_OsfORoX3Oleim_GoLn4sCkTfbLLa9f98gm5UnADUr9LdlhGhMQ==",
-            "theme": null,
-            "id": 1002
-        },
-        {
-            "name": "test3",
-            "pass": "gAAAAABiBHcuH21FXYfaL_y3xyuAHgFcvTAhwZFFs4B9gz0iyFE3wJd6KaUEx0_Tte1fJJMIHUAncci-Fpiayx87d0IoAiC5YQ==",
-            "theme": "autumn",
-            "id": 1005
-        }
-    ],
-    "id_count": 1010
+    "users": [],
+    "id_count": 1000
 }
