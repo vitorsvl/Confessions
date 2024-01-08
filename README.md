@@ -1,8 +1,14 @@
 ## About ConfessionS
 
-ConfessionS is an console diary application built with python. It's a simple non-GUI application that allow users to write any thoughts that they want at the moment, what is called a confession.  
-The application has a login system, a profile with username and password must be created in order to use the app, abd all confessions created by a user can be only accessed by that user, all user info along with confessions are saved locally using _json_ files.  
-The main goal of this project was/is to improve skills with python and programming in general, also putting into practice the main ideas of Human Computer Interaction, focusing on esuring usability by catching exceptions and ensuring that changes made by the user in runtime are saved. Also, the command-line resources were explored using the __rich__ library to create a good interface for the application.  
+ConfessionS is a console diary application built with Python. It's a simple non-GUI application that allows users to write down their thoughts at the moment, which is called a confession.
+
+## Features
+
+- Login system: A profile with username and password must be created in order to use the app.
+- All confessions created by a user can only be accessed by that user.
+- All user info along with confessions are saved locally using JSON files.
+
+The main goal of this project was/is to improve skills with python and programming in general, also putting into practice the main ideas of Human Computer Interaction, focusing on esuring usability by catching exceptions and ensuring that changes made by the user in runtime are saved. Also, the command-line resources were explored using the __rich__ library to create a custom and unique interface for the application, exploring console customization.
 
 ## Setup and Run
 
